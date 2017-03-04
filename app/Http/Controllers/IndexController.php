@@ -8,6 +8,7 @@ use App\Page;
 use App\Portfolio;
 use App\Service;
 use App\People;
+use DB;
 
 class IndexController extends Controller
 {
@@ -16,6 +17,7 @@ class IndexController extends Controller
         $portfolios = Portfolio::get(['name', 'filter', 'images']); // все записи, но определенные поля
         $services = Service::where('id', '<', 20)->get(); // записи, у которых ид меньше 20
         $peoples = People::take(3)->get(); // только 3 записи
+        $tags = DB::table('portfolios')->distinct()->pluck('filter'); // уникальные значения поля filter
 
         $menu = [];
         foreach($pages as $page){
@@ -37,7 +39,8 @@ class IndexController extends Controller
             'pages'=>$pages,
             'services'=>$services,
             'portfolios'=>$portfolios,
-            'peoples'=>$peoples
+            'peoples'=>$peoples,
+            'tags'=>$tags
         ]);
     }
 }
