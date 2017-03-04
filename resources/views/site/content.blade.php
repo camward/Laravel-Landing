@@ -1,4 +1,4 @@
-<section id="hero_section" class="top_cont_outer">
+<section id="home" class="top_cont_outer">
   <div class="hero_wrapper">
     <div class="container">
       <div class="hero_section">
@@ -383,6 +383,6 @@
     </section>
   </div>
   <div class="container">
-    <div class="footer_bottom"><span>Copyright © 2014,    Template by <a href="http://webthemez.com">WebThemez.com</a>. </span> </div>
+    <div class="footer_bottom"><span>Copyright ï¿½ 2014,    Template by <a href="http://webthemez.com">WebThemez.com</a>. </span> </div>
   </div>
 </footer>
