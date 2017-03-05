@@ -48,6 +48,11 @@ class PagesEditController extends Controller
             }
         }
 
+        if($request->isMethod('delete')){
+            $page->delete();
+            return redirect('admin')->with('status', 'Страница удалена');
+        }
+
         $old = $page->toArray();
         if(view()->exists('admin.pages_edit')){
             $data = [
