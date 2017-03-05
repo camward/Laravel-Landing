@@ -28,7 +28,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
 
     Route::group(['prefix'=>'pages'], function(){
         // admin/pages
-        Route::get('/', ['uses'=>'PageController@execute', 'as'=>'pages']);
+        Route::get('/', ['uses'=>'PagesController@execute', 'as'=>'pages']);
         // admin/pages/add
         Route::match(['get', 'post'], '/add', ['uses'=>'PagesAddController@execute', 'as'=>'pagesAdd']);
         // admin/pages/edit/2
