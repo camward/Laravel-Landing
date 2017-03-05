@@ -10,6 +10,7 @@ use App\Service;
 use App\People;
 use DB;
 use Mail;
+use Cache;
 
 class IndexController extends Controller
 {
@@ -48,20 +49,31 @@ class IndexController extends Controller
         $peoples = People::take(3)->get(); // только 3 записи
         $tags = DB::table('portfolios')->distinct()->pluck('filter'); // уникальные значения поля filter
 
-        $menu = [];
-        foreach($pages as $page){
-            $item = ['title'=>$page->name, 'alias'=>$page->alias];
-            array_push($menu, $item);
+        // Cache::forget('menu'); // очистка кеша
+        // Cache::flush(); // полная очистка кеша
+        if(Cache::has('menu')){
+            $menu = Cache::get('menu', 'Меню не закешированно');
+            // $menu = Cache::pull('menu', 'Меню не закешированно'); // вернет значение и сразу удалит его
         }
+        else{
+            $menu = [];
+            foreach($pages as $page){
+                $item = ['title'=>$page->name, 'alias'=>$page->alias];
+                array_push($menu, $item);
+            }
 
-        $item = ['title'=>'Services', 'alias'=>'service'];
-        array_push($menu, $item);
-        $item = ['title'=>'Portfolio', 'alias'=>'Portfolio'];
-        array_push($menu, $item);
-        $item = ['title'=>'Team', 'alias'=>'team'];
-        array_push($menu, $item);
-        $item = ['title'=>'Contact', 'alias'=>'contact'];
-        array_push($menu, $item);
+            $item = ['title'=>'Services', 'alias'=>'service'];
+            array_push($menu, $item);
+            $item = ['title'=>'Portfolio', 'alias'=>'Portfolio'];
+            array_push($menu, $item);
+            $item = ['title'=>'Team', 'alias'=>'team'];
+            array_push($menu, $item);
+            $item = ['title'=>'Contact', 'alias'=>'contact'];
+            array_push($menu, $item);
+
+            Cache::put('menu', $menu, 2); // кешируем меню на 2 минуты
+            // Cache::forever('menu', $menu); // закеширует навсегда
+        }
 
         return view('site.index', [
             'menu'=>$menu,
