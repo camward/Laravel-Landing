@@ -11,6 +11,7 @@ use App\People;
 use DB;
 use Mail;
 use Cache;
+use Redis;
 
 class IndexController extends Controller
 {
@@ -48,6 +49,10 @@ class IndexController extends Controller
         $services = Service::where('id', '<', 20)->get(); // записи, у которых ид меньше 20
         $peoples = People::take(3)->get(); // только 3 записи
         $tags = DB::table('portfolios')->distinct()->pluck('filter'); // уникальные значения поля filter
+
+        // работа с Redis Databases
+        // Redis::set('name', 'Alex');
+        // Redis::get('name');
 
         // Cache::forget('menu'); // очистка кеша
         // Cache::flush(); // полная очистка кеша
